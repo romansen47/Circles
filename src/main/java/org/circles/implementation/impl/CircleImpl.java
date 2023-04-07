@@ -1,6 +1,6 @@
-package org.circles.impl;
+package org.circles.implementation.impl;
 
-import org.circles.ICircle;
+import org.circles.implementation.Circle;
 
 /**
  * 
@@ -9,7 +9,7 @@ import org.circles.ICircle;
  * Implementation for a circle.
  * 
  */
-public class Circle implements ICircle{
+public class CircleImpl implements Circle{
 	
 	/** 
 	 * @param x the x-coordinate
@@ -18,7 +18,7 @@ public class Circle implements ICircle{
 	 * @param vx the horizontal velocity
 	 * @param vy the vertical velocity
 	 */
-	public Circle(float x, float y, float radius, float vx, float vy) {
+	public CircleImpl(float x, float y, float radius, float vx, float vy) {
         this.setXcoordinate(x);
         this.setYcoordinate(y);
         this.setRadius(radius);

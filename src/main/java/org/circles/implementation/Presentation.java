@@ -1,4 +1,4 @@
-package org.circles;
+package org.circles.implementation;
 
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
@@ -9,7 +9,7 @@ import static org.lwjgl.opengl.GL11.glClear;
 
 import java.util.Random;
 
-import org.circles.impl.Circle;
+import org.circles.implementation.impl.CircleImpl;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
  
@@ -64,7 +64,7 @@ public interface Presentation extends MovingCircles{
             float y = getRandomNumberGenerator().nextFloat() * 2 - 1 - radius;
             float vx = getRandomNumberGenerator().nextFloat() * 0.01f - 0.005f;
             float vy = getRandomNumberGenerator().nextFloat() * 0.01f - 0.005f;
-            getListOfCircles().add(new Circle(x, y, radius, vx, vy));
+            getListOfCircles().add(new CircleImpl(x, y, radius, vx, vy));
         }
     }
      

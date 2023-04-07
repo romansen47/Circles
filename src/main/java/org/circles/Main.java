@@ -1,4 +1,6 @@
-package org.circles.impl;  
+package org.circles;
+
+import org.circles.implementation.impl.MovingCirclesPresentation;
 
 public class Main extends MovingCirclesPresentation {
  

@@ -1,11 +1,11 @@
-package org.circles.impl;
+package org.circles.implementation.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.circles.ICircle; 
-import org.circles.Presentation;
+import org.circles.implementation.Circle;
+import org.circles.implementation.Presentation;
 
 /**
  * 
@@ -45,13 +45,13 @@ public abstract class MovingCirclesPresentation implements Presentation{
 	/**
 	 * the list of visible circles
 	 */
-    private final List<ICircle> listOfCircles = new ArrayList<>();
+    private final List<Circle> listOfCircles = new ArrayList<>();
     
     /**
      * {@inheritDoc }
      */
     @Override
-	public List<ICircle> getListOfCircles() { 
+	public List<Circle> getListOfCircles() { 
 		return listOfCircles;
 	}
 

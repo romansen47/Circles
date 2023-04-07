@@ -1,6 +1,6 @@
-package org.circles;
+package org.circles.implementation;
 
-public interface ICircle {
+public interface Circle {
 	
 	/**
      * the x-coordinate

@@ -1,4 +1,4 @@
-package org.circles; 
+package org.circles.implementation; 
  
 import org.lwjgl.opengl.GL11;
 
@@ -19,7 +19,7 @@ public interface MovingCircles {
 	/**
      * the list of visible circles
      */
-	List<ICircle> getListOfCircles(); 
+	List<Circle> getListOfCircles(); 
 
     /**
      * the amount of substeps
@@ -27,16 +27,16 @@ public interface MovingCircles {
 	int getAmountOfSubSteps();
 
     default void applyGravity(){
-        for (ICircle circle : getListOfCircles()) {
+        for (Circle circle : getListOfCircles()) {
             circle.setYvelocity(circle.getYvelocity() + getGravitationalConstant());
         }
     };
 
     default void checkCollisions(){
         for (int i = 0; i < getListOfCircles().size(); i++) {
-            ICircle circleA = getListOfCircles().get(i);
+            Circle circleA = getListOfCircles().get(i);
             for (int j = i + 1; j < getListOfCircles().size(); j++) {
-                ICircle circleB = getListOfCircles().get(j);
+                Circle circleB = getListOfCircles().get(j);
                 if (circleCollision(circleA, circleB)) {
                     resolveCollision(circleA, circleB);
                 }
@@ -44,7 +44,7 @@ public interface MovingCircles {
         }
     };
 
-    default boolean circleCollision(ICircle a, ICircle b) {
+    default boolean circleCollision(Circle a, Circle b) {
         float dx = a.getXcoordinate() - b.getXcoordinate();
         float dy = a.getYcoordinate() - b.getYcoordinate();
         float distance = (float) Math.sqrt(dx * dx + dy * dy);
@@ -56,7 +56,7 @@ public interface MovingCircles {
         float damping = 0.99f; // Dämpfungsfaktor, um die Geschwindigkeit zu reduzieren
 
         for (int step = 0; step < getAmountOfSubSteps(); step++) {
-            for (ICircle circle : getListOfCircles()) {
+            for (Circle circle : getListOfCircles()) {
                 circle.setXcoordinate(circle.getXcoordinate() + circle.getXvelocity());
                 circle.setYcoordinate(circle.getYcoordinate() + circle.getYvelocity());
 
@@ -77,7 +77,7 @@ public interface MovingCircles {
         }
     };
 
-    default float calculateKineticEnergy(ICircle circle) {
+    default float calculateKineticEnergy(Circle circle) {
         return 1e15f * circle.getMass() * (circle.getXvelocity() * circle.getXvelocity() + circle.getYvelocity() * circle.getYvelocity());
     }
 
@@ -86,7 +86,7 @@ public interface MovingCircles {
 
         // Zeichnen Sie die Kreise mit einer Farbe, die von ihrer kinetischen Energie
         // abhängt
-        for (ICircle circle : getListOfCircles()) {
+        for (Circle circle : getListOfCircles()) {
             float energy = calculateKineticEnergy(circle);
             //System.out.println(energy);
             float energyRatio = energy*energy / maxEnergy;
@@ -99,7 +99,7 @@ public interface MovingCircles {
         }
     }
 
-    default void drawCircle(ICircle circle, float r, float g, float b) {
+    default void drawCircle(Circle circle, float r, float g, float b) {
         int numSegments = 50;
         float angleStep = 2 * (float) Math.PI / numSegments;
 
@@ -118,7 +118,7 @@ public interface MovingCircles {
         GL11.glEnd();
     }
 
-    default void resolveCollision(ICircle c1, ICircle c2) {
+    default void resolveCollision(Circle c1, Circle c2) {
         float dx = c2.getXcoordinate() - c1.getXcoordinate();
         float dy = c2.getYcoordinate() - c1.getYcoordinate();
         float distance = (float) Math.sqrt(dx * dx + dy * dy);
