@@ -12,9 +12,46 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <lwjgl.version>3.3.2</lwjgl.version>
-		<lwjgl.natives>natives-linux</lwjgl.natives>
+		<!--<lwjgl.natives>natives-linux</lwjgl.natives>-->
+		<lwjgl.natives>natives-${os.name}</lwjgl.natives>
 	</properties>
 
+	<profiles>
+	    <profile>
+	        <id>windows</id>
+	        <activation>
+	            <os>
+	                <family>windows</family>
+	            </os>
+	        </activation>
+	        <properties>
+				<os.name>windows</os.name>
+	        </properties>
+	    </profile>
+	    <profile>
+	        <id>mac</id>
+	        <activation>
+	            <os>
+	                <family>mac</family>
+	            </os>
+	        </activation>
+	        <properties>
+				<os.name>macos</os.name>
+	        </properties>
+	    </profile>
+	    <profile>
+	        <id>linux</id>
+	        <activation>
+	            <os>
+	                <family>unix</family>
+	            </os>
+	        </activation>
+	        <properties>
+				<os.name>linux</os.name>
+	        </properties>
+	    </profile>
+	</profiles>
+	
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -23,7 +60,7 @@
 				<version>${lwjgl.version}</version>
 				<scope>import</scope>
 				<type>pom</type>
-			</dependency>
+			</dependency> 
 		</dependencies>
 	</dependencyManagement>
 
@@ -52,5 +89,81 @@
 			<artifactId>lwjgl-opengl</artifactId>
 		</dependency>  
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-help-plugin</artifactId>
+	            <version>3.2.0</version>
+	            <executions>
+	                <execution>
+	                    <id>show-profiles</id>
+	                    <phase>compile</phase>
+	                    <goals>
+	                        <goal>active-profiles</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	        </plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-dependency-plugin</artifactId>
+			    <version>3.5.0</version>
+			    <executions>
+			        <execution>
+			            <id>copy-dependencies</id>
+			            <phase>prepare-package</phase>
+			            <goals>
+			                <goal>copy-dependencies</goal>
+			            </goals>
+			            <configuration>
+			                <outputDirectory>
+			                    ${project.build.directory}/libs
+			                </outputDirectory>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-jar-plugin</artifactId>
+			    <version>3.3.0</version>
+			    <configuration>
+			        <archive>
+			            <manifest>
+			                <addClasspath>true</addClasspath>
+			                <classpathPrefix>libs/</classpathPrefix>
+			                <mainClass>
+			                    org.circles.Main
+			                </mainClass>
+			            </manifest>
+			        </archive>
+			    </configuration>
+			</plugin>
+			<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-enforcer-plugin</artifactId>
+	            <version>3.1.0</version>
+	            <executions>
+	                <execution>
+	                    <id>enforce-os-profile</id>
+	                    <goals>
+	                        <goal>enforce</goal>
+	                    </goals>
+	                    <configuration>
+	                        <rules>
+	                            <requireActiveProfile>
+	                                <profiles>windows,mac,linux</profiles>
+	                                <all>false</all>
+	                            </requireActiveProfile>
+	                        </rules>
+	                        <fail>true</fail>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
+		</plugins>
+	</build>
 
 </project>
