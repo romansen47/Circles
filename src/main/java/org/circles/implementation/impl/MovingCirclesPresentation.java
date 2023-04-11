@@ -19,7 +19,7 @@ public abstract class MovingCirclesPresentation implements Presentation{
 	/**
 	 * the gravitational constant
 	 */
-	private final float gravitationalConstant = -0.00001f;
+	private final float gravitationalConstant = -0.0001f;
 	
 	/**
 	 * {@inheritDoc }

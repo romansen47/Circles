@@ -22,5 +22,4 @@ public class Main extends MovingCirclesPresentation {
 		return windowHeight;
 	}
  
-
 }

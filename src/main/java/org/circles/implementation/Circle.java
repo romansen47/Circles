@@ -3,7 +3,7 @@ package org.circles.implementation;
 public interface Circle {
 	
 	/**
-     * the x-coordinate
+     * @return the x-coordinate
      */
     public float getXcoordinate();
 
@@ -14,7 +14,7 @@ public interface Circle {
     public void setXcoordinate(float x);
 
     /**
-     *  the y-coordinate
+     *  @return the y-coordinate
      */
     public float getYcoordinate() ;
 
@@ -25,7 +25,7 @@ public interface Circle {
     public void setYcoordinate(float y) ;
 
     /**
-     *  the horizontal velocity component
+     *  @return the horizontal velocity component
      */
     public float getXvelocity();
 
@@ -36,7 +36,7 @@ public interface Circle {
     public void setXvelocity(float vx) ;
 
     /**
-     *  the vertical velocity component
+     *  @return the vertical velocity component
      */
     public float getYvelocity() ;
 
@@ -46,7 +46,7 @@ public interface Circle {
     public void setYvelocity(float vy) ;
 
     /**
-     *  the radius
+     *  @return the radius
      */
     public float getRadius();
 
@@ -57,7 +57,7 @@ public interface Circle {
     public void setRadius(float radius);
     
     /**
-     *  the mass
+     *  @return the mass
      */
     public float getMass() ;
 
@@ -66,5 +66,14 @@ public interface Circle {
      * @param mass the mass
      */
     public void setMass(float mass);
+    
+    /** 
+     * @return the energy 
+     */ 
+    default float calculateKineticEnergy() {
+        return getMass() * (-getYcoordinate()-getXvelocity() * getXvelocity() - getYvelocity() * getYvelocity());
+    }
+
+	float getInitialEnergy();
 
 }

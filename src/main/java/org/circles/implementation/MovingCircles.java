@@ -77,23 +77,18 @@ public interface MovingCircles {
         }
     };
 
-    default float calculateKineticEnergy(Circle circle) {
-        return 1e15f * circle.getMass() * (circle.getXvelocity() * circle.getXvelocity() + circle.getYvelocity() * circle.getYvelocity());
-    }
-
-    default void drawCircles() {
-        float maxEnergy = 20.0f; // Wählen Sie einen geeigneten Maximalwert für Ihre Simulation
+    default void drawCircles() {  
 
         // Zeichnen Sie die Kreise mit einer Farbe, die von ihrer kinetischen Energie
         // abhängt
         for (Circle circle : getListOfCircles()) {
-            float energy = calculateKineticEnergy(circle);
+            float energy = circle.calculateKineticEnergy();
             //System.out.println(energy);
-            float energyRatio = energy*energy / maxEnergy;
+            float energyRatio = energy / circle.getInitialEnergy();
             energyRatio = Math.max(0.0f, Math.min(1.0f, energyRatio));
-            float r = energyRatio;
+            float r = 1.0f - energyRatio;
             float g = 0.0f;
-            float b = 1.0f - energyRatio;
+            float b = energyRatio;
 
             drawCircle(circle, r, g, b);
         }
@@ -104,7 +99,7 @@ public interface MovingCircles {
         float angleStep = 2 * (float) Math.PI / numSegments;
 
         GL11.glBegin(GL11.GL_TRIANGLE_FAN);
-        GL11.glColor3f(0.0f, 0.0f, 1.0f); // Blaue Farbe
+        //GL11.glColor3f(0.0f, 0.0f, 1.0f); // Blaue Farbe
         GL11.glVertex2f(circle.getXcoordinate(), circle.getYcoordinate()); // Zentrum des Kreises
 
         for (int i = 0; i <= numSegments; i++) {

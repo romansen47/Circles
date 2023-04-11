@@ -62,8 +62,8 @@ public interface Presentation extends MovingCircles{
             float radius = 250* (0.05f + getRandomNumberGenerator().nextFloat() * 0.1f)/getNumberOfCircles();
             float x = getRandomNumberGenerator().nextFloat() * 2 - 1 - radius;
             float y = getRandomNumberGenerator().nextFloat() * 2 - 1 - radius;
-            float vx = getRandomNumberGenerator().nextFloat() * 0.01f - 0.005f;
-            float vy = getRandomNumberGenerator().nextFloat() * 0.01f - 0.005f;
+            float vx = 0f;//getRandomNumberGenerator().nextFloat() * 0.01f - 0.005f;
+            float vy = 0f;//getRandomNumberGenerator().nextFloat() * 0.01f - 0.005f;
             getListOfCircles().add(new CircleImpl(x, y, radius, vx, vy));
         }
     }

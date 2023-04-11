@@ -24,7 +24,8 @@ public class CircleImpl implements Circle{
         this.setRadius(radius);
         this.setXvelocity(vx);
         this.setYvelocity(vy);
-        this.setMass(5*(float) Math.pow(radius, 3)); // mass is proportional to the qube of the radius
+        this.setMass(0.5f*(float) Math.pow(radius, 3)); // mass is proportional to the qube of the radius
+        this.setInitialEnergy(-this.getMass()*this.getYcoordinate());
     }
 
  
@@ -141,6 +142,24 @@ public class CircleImpl implements Circle{
     public void setMass(float mass) {
         this.mass = mass;
     }
+
+    /**
+     * the initial energy
+     */
+    private float initialEnergy;
+    
+	@Override
+	public float getInitialEnergy() { 
+		return initialEnergy;
+	}
+
+	/**
+	 * Setter for the initial energy
+	 * @param initialEnergy the initial energy
+	 */
+	private void setInitialEnergy(float initialEnergy) {
+		this.initialEnergy = initialEnergy;
+	}
    
 }
 
